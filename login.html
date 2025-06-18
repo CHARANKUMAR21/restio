@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Restio | Login & Signup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", sans-serif;
+    }
+
+    body {
+      /* background: linear-gradient(90deg, #FF6B6B, #FFD93D, #6BCB77, #4D96FF); */
+       background: linear-gradient(90deg, #309898, #FF9F00, #F4631E);
+        /* background: linear-gradient(90deg, #DFD0B8, #948979, #393E46); */
+
+      background-size: 400% 400%;
+      animation: gradientMove 10s ease infinite;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .form-container {
+      background: white;
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      animation: fadeIn 1.2s ease-in;
+      transition: all 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.6rem 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: #4D96FF;
+      outline: none;
+      box-shadow: 0 0 8px rgba(77, 150, 255, 0.2);
+    }
+
+    button {
+      margin-top: 1rem;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(to right, #4D96FF, #6BCB77);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .switch-mode {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .switch-mode button {
+      background: none;
+      border: none;
+      color: #4D96FF;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .signup-mode h2::after {
+      content: " - Create Account";
+      font-weight: normal;
+      font-size: 16px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container" id="form-container">
+    <h2 id="form-title">Login to Restio</h2>
+   <form id="auth-form">
+  <input type="email" id="email" placeholder="Email" required  />
+  <input type="password" id="password" placeholder="Password" required />
+  <input type="password" id="confirm-password" placeholder="Confirm Password" style="display: none;" />
+  <button type="submit" id="submit-btn">Login</button>
+</form>
+    <div class="switch-mode">
+      Don't have an account? <button id="toggle-btn">Sign up</button>
+    </div>
+  </div>
+<script>
+  const formContainer = document.getElementById("form-container");
+  const toggleBtn = document.getElementById("toggle-btn");      
+  const formTitle = document.getElementById("form-title");      
+  const form = document.getElementById("auth-form");            
+  const submitBtn = document.getElementById("submit-btn");      
+
+  const emailField = document.getElementById("email");          
+  const passwordField = document.getElementById("password");    
+  const confirmPasswordField = document.getElementById("confirm-password");
+
+  let isLogin = true; 
+
+  toggleBtn.addEventListener("click", () => {
+    isLogin = !isLogin; 
+
+    if (isLogin) {
+      formTitle.innerText = "Login to Restio";
+      submitBtn.innerText = "Login";
+      toggleBtn.innerText = "Sign up";
+      confirmPasswordField.style.display = "none"; 
+    } else {
+      formTitle.innerText = "Sign up for Restio";
+      submitBtn.innerText = "Sign Up";
+      toggleBtn.innerText = "Login";
+      confirmPasswordField.style.display = "block"; 
+    }
+  });
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault(); 
+
+    const email = emailField.value.trim(); 
+    const password = passwordField.value.trim(); 
+    const confirmPassword = confirmPasswordField.value.trim(); 
+
+    if (!email || !password || (!isLogin && !confirmPassword)) {
+      alert("Please fill all fields.");
+      return;
+    }
+
+    if (!isLogin && password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    window.location.href = "index.html";
+  });
+</script>
+
+
+</body>
+</html>

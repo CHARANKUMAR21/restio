@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mahalaxmi Apartment</title>
+    <link rel="icon" type="image/x-icon" href="./restio.png">
+    <link rel="stylesheet" href="detail.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<div class="container mt-5" id="details-container">
+      Loading hotel details...
+    </div>
+    
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const hotelId = params.get("id");
+      console.log("Hotel ID:", hotelId);
+
+      fetch("hotels.json")
+        .then((response) => response.json())
+        .then((data) => {
+          const hotels = Array.isArray(data) ? data : data.hotels;
+
+          if (!Array.isArray(hotels)) {
+            throw new Error(
+              "Invalid JSON structure: expected array or {hotels: [...] }"
+            );
+          }
+
+          const hotel = hotels.find((h) => String(h.hotel_id) === hotelId);
+          const container = document.getElementById("details-container");
+
+          if (hotel) {
+            container.innerHTML = `
+<div class="container">
+    <div class="imagegrid">
+        <div class="mainimage"><img src="./1.webp" alt="main image" /></div>
+        <div class="smallimages">
+            <img src="./1.webp" alt="Building" />
+            <img src="./1.webp" alt="Building" />
+            <img src="./1.webp" alt="Building" />
+            <img src="./1.webp" alt="Building" />
+        </div>
+        <h2>${hotel.hotel_name}</h2>
+
+
+    </div>
+
+    <div class="info">
+        <div class="details">
+            <p class="location">${hotel.city}, ${hotel.country}</p>
+            <p> <i class="fa-solid fa-people-group"></i> &nbsp;4 guests &nbsp;&nbsp;<i class="fa-solid fa-bed"></i> 2
+                bedrooms &nbsp;&nbsp;<i class="fa-solid fa-bath"></i> 1 bathroom</p>
+            <div class="rating">
+                <span><i class="fa-solid fa-star"></i> </span> ${hotel.star_rating} ★★★★
+            </div>
+            <div class="badge">
+                <p><i class="fa-solid fa-people-group"></i> Guest favourite</p>
+
+            </div>
+
+            <div class="advive">
+                <p><strong>Hosted by Arun</strong> · Superhost · 4 years hosting</p>
+                <ul>
+                    <li><i class="fa-solid fa-user-check"></i> &nbsp;Self check-in</li>
+                    <li><i class="fa-solid fa-road"></i> &nbsp;50-min drive to Sultanpur National Park</li>
+                    <li><i class="fa-solid fa-ghost"></i> &nbsp;Arun is a Superhost</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="bookingbox">
+            <p class="price">${hotel.rates_currency} ${hotel.rates_from} for 1 night</p>
+            <form>
+                <div class="dates">
+                    <label>Check-in<br /><input type="date" value="2025-05-20" /></label>
+                    <label>Checkout<br /><input type="date" value="2025-05-22u" /></label>
+                </div>
+                <label>Guests<br /><input type="number" value="1" min="1" max="4" /></label>
+<button class="btn btn-success" onclick="window.location.href='booking.html?id=${hotel.hotel_id}'">Reserve</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container2">
+    <hr>
+
+    <div class="featuresec">
+        <h3>What this place offers</h3>
+        <div class="features">
+            <div class="feature"><i class="fa-solid fa-kitchen-set"></i> &nbsp; Kitchen</div>
+            <div class="feature"><i class="fa-solid fa-wifi"></i> &nbsp; Wifi</div>
+            <div class="feature"><i class="fa-solid fa-tv"></i> &nbsp; TV</div>
+            <div class="feature"> <i class="fas fa-fan"></i> &nbsp;Air conditioning</div>
+            <div class="feature"><i class="fas fa-suitcase-rolling"></i> &nbsp; Luggage drop-off allowed</div>
+            <div class="feature"> <i class="fas fa-bowl-food"></i>&nbsp; Microwave</div>
+            <div class="feature"><i class="fa-solid fa-house-flag"></i> &nbsp;&nbsp;Long-term stays allowed</div>
+            <div class="feature"><i class="fas fa-camera"></i> &nbsp;&nbsp;Exterior security cameras</div>
+            <div class="feature disabled"><s> <i class="fa-solid fa-bell"></i>&nbsp;&nbsp;Carbon monoxide alarm</s></div>
+            <div class="feature disabled"><s> <i class="fa-solid fa-bell-concierge"></i>&nbsp;&nbsp; Smoke alarm</s></div>
+        </div>
+    </div>
+
+</div>
+
+<section class="reviewsec">
+    <div class="cenrating">
+        <div class="dog">
+            <h1 class="st">
+                <img src="./leaf1.jpg">
+                <!-- <img src="./dog2.jpg"> -->
+
+                <span>${hotel.star_rating} ★</span>
+                <!-- <img src="./leaf1.jpg"> -->
+
+                <img id="img2" src="leaf1.jpg">
+            </h1>
+        </div>
+        <p class="fav">Guest Favourite</p>
+        <p class="desc">This home is a guest favourite based on ratings, reviews and reliability</p>
+        <div class="specrating">
+            <div>Cleanliness: <strong>5.0</strong></div>
+            <div>Accuracy: <strong>4.9</strong></div>
+            <div>Check-in: <strong>4.8</strong></div>
+            <div>Communication: <strong>5.0</strong></div>
+            <div>Location: <strong>4.3</strong></div>
+            <div>Value: <strong>4.9</strong></div>
+        </div>
+        <div class="ttt">
+            <span><i class="fa-solid fa-hospital"></i> Great hospitality</span>
+            <span><i class="fa-solid fa-pump-soap"></i> Clean</span>
+            <span><i class="fa-solid fa-walkie-talkie"></i> Great communication</span>
+            <span><i class="fa-solid fa-bus"></i> Near public transport</span>
+        </div>
+    </div>
+
+    <div class="reviews">
+        <div class="reviewcard">
+            <h4>Ayushkar <span><i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i></span></h4>
+            <p><small>1 week ago</small></p>
+            <p>Arun's place is exactly same as shown. Kitchen is equipped with necessary utensils and appliances.
+                Arun is a gem of a host!</p>
+        </div>
+
+        <div class="reviewcard ">
+            <h4>Shubhang <span><i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i></span></h4>
+            <p><small>3 weeks ago</small></p>
+            <p>House is clean and cozy. Arun handled everything smoothly and was responsive throughout the stay.</p>
+        </div>
+
+        <div class="reviewcard ">
+            <h4>Carmela <span><i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i></span></h4>
+            <p><small>4 weeks ago</small></p>
+            <p>A safe and calm space in Pahar Ganj. Super comfy stay and excellent host. Highly recommended!</p>
+        </div>
+
+        <div class="reviewcard ">
+            <h4>Sajana <span><i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i></span></h4>
+            <p><small>April 2025</small></p>
+            <p>I booked for my family and the stay was pleasant. Close to markets and the host made everything
+                seamless.</p>
+        </div>
+
+        <div class="reviewcard ">
+            <h4>Leonardo <span><i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i></span></h4>
+            <p><small>March 2025</small></p>
+            <p>From the first message to checkout, everything was smooth. Very clean and comfortable space.</p>
+        </div>
+
+        <div class="reviewcard ">
+            <h4>Shubham <span><i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i></span></h4>
+            <p><small>February 2025</small></p>
+            <p>Arun was a gracious host. The property was in excellent condition and matched our expectations.</p>
+        </div>
+    </div>
+
+    <div class="centerbtn">
+        <button class="show-more-btn">Show all 35 reviews</button>
+    </div>
+</section>
+<section>
+    <div class="map">
+  <h3>Where you'll be</h3>
+  <p>Hyderabad, Telangana, India</p>
+  <div class="map-responsive">
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6695.051581539235!2d78.38200770721619!3d17.506080378051177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb91f8706d4851%3A0x58e04e30d0634073!2sMAHALAKSHMI%20ESTATES%2C%20Hyder%20Nagar%2C%20Brindavan%20Colony%2C%20Nizampet%2C%20Hyderabad%2C%20Telangana%20500090!5e0!3m2!1sen!2sin!4v1747719965988!5m2!1sen!2sin"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+  </div>
+</div>
+
+</section>
+<div class="thing"><h3>Things to know</h3></div>
+  <section class="footerlinks">
+    <div class="footersec">
+      <h4>House rules</h4>
+      <p>Check-in after 2:00 pm</p>
+      <p>Checkout before 11:00 am</p>
+      <p>2 guests maximum</p>
+      <button>Show more ></button>
+    </div>
+
+    <div class="footersec">
+      <h4>Safety & property</h4>
+      <p>Carbon monoxide alarm not Reported</p>
+      <p>Smoke alarm not reported</p>
+      <p>Exterior security cameras on property</p>
+      <button>Show more></button>
+     
+    </div>
+
+    <div class="footersec">
+      <h4>Cancellation policy</h4>
+      <p>Free Cancellation before 5 days before reserved</p>
+      <p>Check-in on time</p>
+      <p>Review this Host’s full policy for details.</p>
+      <button>Show more></button>
+
+    </div>
+  </section>
+
+    <section class="footerlinks">
+    <div class="footersec">
+      <h4>Support</h4>
+      <button>Help Centre</button>
+      <button>RestioCover</button>
+      <button>Anti-discrimination</button>
+      <button>Disability support</button>
+      <button>Cancellation options</button>
+      <button>Report neighbourhood concern</button>
+    </div>
+
+    <div class="footersec">
+      <h4>Hosting</h4>
+      <button>Restio your home</button>
+      <button>RestioCover for Hosts</button>
+      <button>Hosting resources</button>
+      <button>Community forum</button>
+      <button>Hosting responsibly</button>
+      <button>Join a free Hosting class</button>
+      <button>Find a co-host</button>
+    </div>
+
+    <div class="footersec">
+      <h4>Restio</h4>
+      <button>2025 Summer Release</button>
+      <button>Newsroom</button>
+      <button>New features</button>
+      <button>Careers</button>
+      <button>Investors</button>
+      <button>Restio.org emergency stays</button>
+    </div>
+  </section>
+
+
+  <section>
+    <nav class="btmNav">
+      <!-- Logo -->
+      <div class="leftSideBtm">
+        <p>© 2025 Restio, Inc</p>
+        <ul class="footer">
+          <li>Privacy</li>
+          <li>Terms</li>
+          <li>Sitemaps</li>
+          <li>Company details</li>
+        </ul>
+      </div>
+
+      <!-- right menu -->
+      <div class="rightSideBottom gap-5">
+        <p>Restio</p>
+        <p class="d-flex gap-5">
+          <i class="fa-brands fa-facebook"></i>
+          <i class="fa-brands fa-x-twitter"></i>
+          <i class="fa-brands fa-instagram"></i>
+        </p>
+      </div>
+    </nav>
+  </section>`;}
+  else {
+            container.innerHTML = "<p class='text-danger'>Hotel not found.</p>";
+          }
+        })
+        .catch((error) => {
+          document.getElementById("details-container").innerHTML =
+            "<p class='text-danger'>Error loading hotel data.</p>";
+          console.error("Error fetching hotels.json:", error);
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+:root {
+  --primary: #ff7f50;
+  --secondary: #ff6a95;
+  --bg: linear-gradient(135deg, #fff0f5, #ffe4e1);
+  --text-dark: #333;
+  --text-light: #fff;
+  --card-bg: #ffffffcc;
+  --border-radius: 1rem;
+  --transition-speed: 0.4s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background: var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  animation: fadeInBody 1s ease forwards;
+}
+
+@keyframes fadeInBody {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
+}
+
+.auth-card {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  animation: fadeInCard 1.2s ease;
+}
+
+@keyframes fadeInCard {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+  color: var(--text-dark);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+.input-group label {
+  display: block;
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  transition: border-color var(--transition-speed);
+}
+
+.input-group input:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 0.9rem;
+  background: var(--primary);
+  color: var(--text-light);
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background var(--transition-speed), transform 0.2s ease;
+}
+
+.auth-btn:hover {
+  background: var(--secondary);
+  transform: translateY(-2px);
+}
+
+.switch-text {
+  text-align: center;
+  margin-top: 1rem;
+  color: var(--text-dark);
+}
+
+.switch-text span {
+  color: var(--primary);
+  cursor: pointer;
+  font-weight: bold;
+  transition: color var(--transition-speed);
+}
+
+.switch-text span:hover {
+  color: var(--secondary);
+}
+
+.hidden {
+  display: none;
+}
+
+.fade-in {
+  animation: fadeInSmooth 0.8s ease-in-out;
+}
+
+@keyframes fadeInSmooth {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

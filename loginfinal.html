@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animated Auth UI</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        /* background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); */
+        background-color: #3b82f6;
+        color: #fff;
+        min-height: 100vh;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        position: relative;
+      }
+
+      .circle {
+        position: absolute;
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        background: radial-gradient(circle, #9b2fff, #5e1a8a);
+        animation: float 10s infinite ease-in-out;
+        z-index: 0;
+      }
+
+      .circle1 {
+        width: 300px;
+        height: 300px;
+        top: -150px;
+        left: -100px;
+      }
+
+      .circle2 {
+        width: 300px;
+        height: 300px;
+        bottom: -150px;
+        right: -100px;
+      }
+
+      .circle3 {
+        width: 250px;
+        height: 250px;
+        left: 50%;
+        bottom: 50px;
+        transform: translateX(-50%);
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(20px);
+        }
+      }
+
+      .container {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        height: 100vh;
+        padding: 20px;
+      }
+
+      .text-side {
+        max-width: 400px;
+        flex: 1 1 300px;
+        padding: 20px;
+      }
+
+      .text-side h1 {
+        font-size: 2.5rem;
+        color: #e2e8f0;
+      }
+
+      .text-side h1 span {
+        color: #7dd3fc;
+      }
+
+      .text-side p {
+        margin-top: 1rem;
+        font-size: 1rem;
+        color: #cbd5e1;
+      }
+
+      .form-card {
+        flex: 1 1 300px;
+        background: #1e293b;
+        padding: 30px;
+        border-radius: 10px;
+        max-width: 400px;
+        width: 100%;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+      }
+
+      .form-card h2 {
+        margin-bottom: 1rem;
+        text-align: center;
+        font-weight: 600;
+      }
+
+      .form-card label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+      }
+
+      .form-card input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        background: #334155;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+      }
+
+      .checkbox-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .form-card button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 5px;
+        background: #3b82f6;
+        color: #fff;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .toggle-btn {
+        margin-top: 15px;
+        text-align: center;
+        cursor: pointer;
+        color: #60a5fa;
+        font-size: 0.9rem;
+      }
+
+      .social-icons {
+        display: flex;
+        /* justify-content: center; */
+        justify-content: space-between;
+        align-items: center;
+        gap: 35px;
+        margin-top: 10px;
+      }
+
+      /* .social-btn {
+      width: 45px;
+      height: 45px;
+      border: none;
+      border-radius: 50%;
+      background-color: #3b5998;
+      color: white;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    } */
+
+      #social-signup {
+        display: flex;
+        justify-content: center;
+        gap: 60px;
+        align-items: center;
+      }
+
+      .social-btn:hover {
+        transform: scale(1.1);
+      }
+
+      @media (max-width: 768px) {
+        .text-side {
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 500px) {
+        body {
+          font-family: "Poppins", sans-serif;
+          /* background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); */
+          background-color: #3b82f6;
+          color: #fff;
+          min-height: 100vh;
+          overflow-x: hidden;
+          position: relative;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="circle circle1"></div>
+    <div class="circle circle2"></div>
+    <div class="circle circle3"></div>
+
+    <div class="container">
+      <div class="text-side">
+        <h1>The best offer <br /><span>for your business</span></h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, aliquid!
+        </p>
+      </div>
+
+      <div class="form-card" id="form-container">
+        <h2 id="form-title">Login to Restio</h2>
+        <form id="auth-form">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Email address" required />
+
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+
+          <div id="confirm-password-container" style="display: none">
+            <label for="confirm-password">Confirm Password</label>
+            <input
+              type="password"
+              id="confirm-password"
+              placeholder="Confirm Password"
+            />
+          </div>
+
+          <button type="submit" id="submit-btn">Login</button>
+        </form>
+
+        <div id="social-signup" style="display: none">
+          <div class="social-icons">
+            <button1><i class="fa-brands fa-google"></i></button1>
+            <button1><i class="fa-brands fa-facebook"></i></button1>
+            <button1><i class="fa-solid fa-phone"></i></button1>
+          </div>
+        </div>
+
+        <div class="toggle-btn" id="toggle-btn">Sign up</div>
+      </div>
+    </div>
+
+    <script>
+      const toggleBtn = document.getElementById("toggle-btn");
+      const formTitle = document.getElementById("form-title");
+      const form = document.getElementById("auth-form");
+      const submitBtn = document.getElementById("submit-btn");
+      const emailField = document.getElementById("email");
+      const passwordField = document.getElementById("password");
+      const confirmPasswordField = document.getElementById("confirm-password");
+      const confirmPasswordContainer = document.getElementById(
+        "confirm-password-container"
+      );
+      const socialSignup = document.getElementById("social-signup");
+
+      let isLogin = true;
+
+      toggleBtn.addEventListener("click", () => {
+        isLogin = !isLogin;
+
+        if (isLogin) {
+          formTitle.innerText = "Login to Restio";
+          submitBtn.innerText = "Login";
+          toggleBtn.innerText = "Sign up";
+          confirmPasswordContainer.style.display = "none";
+          socialSignup.style.display = "none";
+        } else {
+          formTitle.innerText = "Sign up for Restio";
+          submitBtn.innerText = "Sign Up";
+          toggleBtn.innerText = "Login";
+          confirmPasswordContainer.style.display = "block";
+          socialSignup.style.display = "flex";
+        }
+      });
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const email = emailField.value.trim();
+        const password = passwordField.value.trim();
+        const confirmPassword = confirmPasswordField.value.trim();
+
+        if (!email || !password || (!isLogin && !confirmPassword)) {
+          alert("Please fill all fields.");
+          return;
+        }
+
+        if (!isLogin && password !== confirmPassword) {
+          alert("Passwords do not match!");
+          return;
+        }
+
+        window.location.href = "index.html";
+      });
+    </script>
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
