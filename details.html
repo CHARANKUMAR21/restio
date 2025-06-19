@@ -75,11 +75,11 @@
         </div>
 
         <div class="bookingbox">
-            <p class="price">${hotel.rates_currency} ${hotel.rates_from} for 1 night</p>
+            <p class="price">${hotel.rates_currency} ${hotel.rates_from} $    for 1 night</p>
             <form>
                 <div class="dates">
-                    <label>Check-in<br /><input type="date" value="2025-05-20" /></label>
-                    <label>Checkout<br /><input type="date" value="2025-05-22u" /></label>
+                    <label>Check-in<br /><input type="date" value="" /></label>
+                    <label>Checkout<br /><input type="date" value="" /></label>
                 </div>
                 <label>Guests<br /><input type="number" value="1" min="1" max="4" /></label>
 <button class="btn btn-success" onclick="window.location.href='booking.html?id=${hotel.hotel_id}'">Reserve</button>
@@ -203,9 +203,9 @@
   <section class="footerlinks">
     <div class="footersec">
       <h4>House rules</h4>
-      <p>Check-in after 2:00 pm</p>
-      <p>Checkout before 11:00 am</p>
-      <p>2 guests maximum</p>
+      <p>Check-in after ${hotel.checkin}</p>
+      <p>Checkout before ${hotel.checkout}</p>
+<p>Guests maximum — ${hotel.numberrooms * 5}</p>
       <button>Show more ></button>
     </div>
 
