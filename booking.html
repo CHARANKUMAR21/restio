@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Restio Booking page</title>
+    <link rel="icon" type="image/x-icon" href="restio.png" />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -21,7 +23,7 @@
         height: 100%;
         background-size: cover;
         background-position: center;
-        background-image: url("./airplane.jpg");
+        background-image: url("./images/book1.jpg");
       }
 
       .booking-box {
@@ -60,7 +62,7 @@
 
       .booking-form h1 {
         text-align: center;
-        color: black;
+        color: #ff2e63;
         font-size: 2.5rem;
         margin-bottom: 25px;
       }
@@ -70,7 +72,7 @@
         gap: 30px;
         flex-wrap: wrap;
       }
-      
+
       #icon {
         color: #ff2e63;
       }
@@ -101,12 +103,10 @@
         transition: all 0.3s ease;
       }
 
-     
-
       .inputbox-inner input:focus {
         outline: none;
         background: rgba(67, 236, 109, 0.5);
-        /* color: white; */
+        color: black;
         box-shadow: 0 0 10px #4f4545;
       }
 
@@ -115,7 +115,7 @@
         width: 100%;
         padding: 14px;
         background: #fff;
-        color: rgb(60, 116, 214);
+        color: #ff2e63;
         font-weight: bold;
         font-size: 18px;
         border-radius: 15px;
@@ -127,7 +127,7 @@
 
       .submit-btn:hover,
       .show-btn:hover {
-        background: #3bbf0b;
+        background: #ff2e63;
         color: black;
         box-shadow: 0 0 20px #0c4a12;
         margin-bottom: 20px;
@@ -137,118 +137,82 @@
         .inputbox-inner {
           flex: 1 1 100%;
         }
-
-          body,
-      html {
-        height: 110%;
-        background-size: cover;
-        background-position: center;
-        background-image: url("./backgro.png");
       }
 
-      .booking-box {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        color: black;
-        justify-content: center;
-        background-size: cover;
-        background: transparent;
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-200px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
       }
-         .booking-form h1 {
-        color: black;
-        font-size: 1.5rem;
+
+      @keyframes slideInRight {
+        from {
+          opacity: 0;
+          transform: translateX(100px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
       }
-       .inputbox {
-        display: flex;
-        gap: 0px;
-        flex-wrap: wrap;
+      @keyframes slideInTop {
+        from {
+          opacity: 0;
+          transform: translateY(100px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
-    
-
+      @keyframes slideInBottom {
+        from {
+          opacity: 0;
+          transform: translateY(-500px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
-      input::placeholder {
-  color:gray; 
-}
 
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-200px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
+      .inputbox .inputbox-inner:nth-child(1) {
+        animation: slideInLeft 1s ease forwards;
+      }
 
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(100px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-@keyframes slideInTop {
-  from {
-    opacity: 0;
-    transform: translateY(100px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes slideInBottom {
-  from {
-    opacity: 0;
-    transform: translateY(-500px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+      .inputbox .inputbox-inner:nth-child(2) {
+        animation: slideInRight 1s ease forwards;
+      }
+      .submit-btn {
+        animation: slideInTop 1s ease forwards;
+      }
+      .show-btn {
+        animation: slideInBottom 1s ease forwards;
+      }
 
-.inputbox .inputbox-inner:nth-child(1) {
-  animation: slideInLeft 1s ease forwards;
-}
-
-.inputbox .inputbox-inner:nth-child(2) {
-  animation: slideInRight 1s ease forwards;
-}
-.submit-btn{
-      animation: slideInTop 1s ease forwards;
-}
-.show-btn{
-    animation: slideInBottom 1s ease forwards;
-}
-
-
-.inputbox:nth-child(2) .inputbox-inner:nth-child(1) {
-  animation-delay: 0.3s;
-}
-.inputbox:nth-child(2) .inputbox-inner:nth-child(2) {
-  animation-delay: 0.3s;
-}
-.inputbox:nth-child(3) .inputbox-inner:nth-child(1) {
-  animation-delay: 0.6s;
-}
-.inputbox:nth-child(3) .inputbox-inner:nth-child(2) {
-  animation-delay: 0.6s;
-}
-
-
+      .inputbox:nth-child(2) .inputbox-inner:nth-child(1) {
+        animation-delay: 0.3s;
+      }
+      .inputbox:nth-child(2) .inputbox-inner:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+      .inputbox:nth-child(3) .inputbox-inner:nth-child(1) {
+        animation-delay: 0.6s;
+      }
+      .inputbox:nth-child(3) .inputbox-inner:nth-child(2) {
+        animation-delay: 0.6s;
+      }
     </style>
   </head>
   <body>
     <div class="booking-box">
       <form class="booking-form" id="bookingform">
-        <h1>Start Booking Your `Restio</h1>
+        <h1>"Plan Your Stay with Restio"</h1>
 
         <div class="inputbox">
           <div class="inputbox-inner">
@@ -256,7 +220,6 @@
             <input type="text" id="name" placeholder="Your Name" required />
           </div>
 
-          
           <div class="inputbox-inner">
             <i class="fas fa-envelope" id="icon"></i>
             <input
@@ -282,13 +245,18 @@
         <div class="inputbox">
           <div class="inputbox-inner">
             <i class="fas fa-calendar-alt" id="icon"></i>
-            <input type="text" placeholder="DD-MM-YYYY" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'">
-
+            <input
+              id="date"
+              type="text"
+              placeholder="DD-MM-YYYY"
+              onfocus="(this.type='date')"
+              onblur="if(!this.value)this.type='text'"
+            />
           </div>
 
           <div class="inputbox-inner">
             <i class="fas fa-clock" id="icon"></i>
-            <input type="text" id="time" placeholder="HH:MM" required />
+            <input type="time" id="time" required />
           </div>
         </div>
 
@@ -305,23 +273,24 @@
 
     <script>
       const form = document.getElementById("bookingform");
-      XMLDocument;
+
       form.addEventListener("submit", function (e) {
         e.preventDefault();
 
-        const bookingDetails = {
+        const bookingData = {
+          ticketNumber: "RESTIO-" + Math.floor(100000 + Math.random() * 900000), // e.g., RESTIO-654321
           name: document.getElementById("name").value.trim(),
           email: document.getElementById("email").value.trim(),
           phone: document.getElementById("phone").value.trim(),
-          guests: document.getElementById("guests").value,
+          guests: document.getElementById("guests").value.trim(),
           date: document.getElementById("date").value,
           time: document.getElementById("time").value,
         };
 
-        localStorage.setItem(
-          "restioBookingData",
-          JSON.stringify(bookingDetails)
-        );
+        // store in localStorage
+        localStorage.setItem("restioBookingData", JSON.stringify(bookingData));
+
+        // Redirect to thank you page
         window.location.href = "thankyou.html";
       });
     </script>

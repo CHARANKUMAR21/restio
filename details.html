@@ -1,20 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mahalaxmi Apartment</title>
-    <link rel="icon" type="image/x-icon" href="./restio.png">
-    <link rel="stylesheet" href="detail.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Restio-Hotel Booking</title>
+    <link rel="icon" type="image/x-icon" href="./restio.png" />
+    <link rel="stylesheet" href="details.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #ff385c;
+        --primary-hover: #e61e4d;
+        --secondary-color: #008489;
+        --dark-color: #222222;
+        --light-color: #ffffff;
+        --gray-color: #717171;
+        --light-gray: #f7f7f7;
+        --border-radius: 12px;
+        --box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        --transition: all 0.2s ease;
+      }
 
-</head>
-<div class="container mt-5" id="details-container">
+      .booknow {
+        margin: 10px;
+        margin-bottom: 10px;
+        border-radius: 20px;
+        text-decoration: none;
+        padding: 10px 140px 10px;
+        height: 30px;
+        border: none;
+        color: #ffffff;
+        background-color: var(--primary-color);
+      }
+      /* Responsive  */
+
+      @media (max-width: 375px) {
+        .booknow {
+          padding: 7px 14px;
+          font-size: 14px;
+        }
+      }
+
+      @media (max-width: 430px) {
+        .booknow {
+          padding: 6px 12px;
+          font-size: 13px;
+          display: block;
+          width: 100%;
+          text-align: center;
+        }
+      }
+      /*Tablet  */
+      @media (max-width: 1450px) {
+        .booknow {
+          padding: 10px 80px;
+          font-size: 15px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container mt-5" id="details-container">
       Loading hotel details...
     </div>
-    
 
     <script>
       const params = new URLSearchParams(window.location.search);
@@ -36,53 +96,85 @@
           const container = document.getElementById("details-container");
 
           if (hotel) {
+            // Generate image gallery HTML with photo1
+            const imageGalleryHTML = generateImageGallery(hotel);
+
             container.innerHTML = `
 <div class="container">
     <div class="imagegrid">
-        <div class="mainimage"><img src="./1.webp" alt="main image" /></div>
-        <div class="smallimages">
-            <img src="./1.webp" alt="Building" />
-            <img src="./1.webp" alt="Building" />
-            <img src="./1.webp" alt="Building" />
-            <img src="./1.webp" alt="Building" />
-        </div>
-        <h2>${hotel.hotel_name}</h2>
-
-
+        ${imageGalleryHTML}
     </div>
+    
+    <h2>${hotel.hotel_name}</h2>
 
     <div class="info">
         <div class="details">
             <p class="location">${hotel.city}, ${hotel.country}</p>
-            <p> <i class="fa-solid fa-people-group"></i> &nbsp;4 guests &nbsp;&nbsp;<i class="fa-solid fa-bed"></i> 2
-                bedrooms &nbsp;&nbsp;<i class="fa-solid fa-bath"></i> 1 bathroom</p>
+            <p> <i class="fa-solid fa-people-group"></i> &nbsp;${
+              hotel.guests || 4
+            } guests &nbsp;&nbsp;<i class="fa-solid fa-bed"></i> ${
+              hotel.bedrooms || 2
+            }
+                bedrooms &nbsp;&nbsp;<i class="fa-solid fa-bath"></i> ${
+                  hotel.bathrooms || 1
+                } bathroom</p>
             <div class="rating">
-                <span><i class="fa-solid fa-star"></i> </span> ${hotel.star_rating} ★★★★
+                <span><i class="fa-solid fa-star"></i> </span> ${
+                  hotel.star_rating
+                } (${hotel.rating_average || 8.2}/10)
             </div>
             <div class="badge">
                 <p><i class="fa-solid fa-people-group"></i> Guest favourite</p>
-
             </div>
 
             <div class="advive">
-                <p><strong>Hosted by Arun</strong> · Superhost · 4 years hosting</p>
+                <p><strong>Hosted by ${
+                  hotel.chain_name || "Arun"
+                }</strong> · Superhost · 4 years hosting</p>
                 <ul>
                     <li><i class="fa-solid fa-user-check"></i> &nbsp;Self check-in</li>
                     <li><i class="fa-solid fa-road"></i> &nbsp;50-min drive to Sultanpur National Park</li>
-                    <li><i class="fa-solid fa-ghost"></i> &nbsp;Arun is a Superhost</li>
+                    <li><i class="fa-solid fa-ghost"></i> &nbsp;${
+                      hotel.chain_name || "Arun"
+                    } is a Superhost</li>
                 </ul>
             </div>
         </div>
 
         <div class="bookingbox">
-            <p class="price">${hotel.rates_currency} ${hotel.rates_from} $    for 1 night</p>
-            <form>
+            <p class="price">${hotel.rates_currency} ${
+              hotel.rates_from
+            } per night</p>
+           <form>
                 <div class="dates">
-                    <label>Check-in<br /><input type="date" value="" /></label>
-                    <label>Checkout<br /><input type="date" value="" /></label>
+                    <label>
+                        Check-in<br />
+                        <input type="date" value="" />
+                    </label>
+                    <label>
+                        Checkout<br />
+                        <input type="date" value="" />
+                    </label>
                 </div>
-                <label>Guests<br /><input type="number" value="1" min="1" max="4" /></label>
-<button class="btn btn-success" onclick="window.location.href='booking.html?id=${hotel.hotel_id}'">Reserve</button>
+
+                <div class="dates">
+                    <label>
+                        Guests<br />
+                        <input type="number" value="1" min="1" max="${
+                          hotel.guests || 4
+                        }" />
+                    </label>
+                    <label>
+                        Time<br />
+                        <input type="time" />
+                    </label>
+                </div>
+
+                <br />
+               
+                  
+                  <a href="booking.html" class="booknow"  btn-sm p-2">Book Now</a>
+                  
             </form>
         </div>
     </div>
@@ -90,7 +182,6 @@
 
 <div class="container2">
     <hr>
-
     <div class="featuresec">
         <h3>What this place offers</h3>
         <div class="features">
@@ -106,7 +197,6 @@
             <div class="feature disabled"><s> <i class="fa-solid fa-bell-concierge"></i>&nbsp;&nbsp; Smoke alarm</s></div>
         </div>
     </div>
-
 </div>
 
 <section class="reviewsec">
@@ -114,11 +204,7 @@
         <div class="dog">
             <h1 class="st">
                 <img src="./leaf1.jpg">
-                <!-- <img src="./dog2.jpg"> -->
-
                 <span>${hotel.star_rating} ★</span>
-                <!-- <img src="./leaf1.jpg"> -->
-
                 <img id="img2" src="leaf1.jpg">
             </h1>
         </div>
@@ -149,7 +235,7 @@
         </div>
 
         <div class="reviewcard ">
-            <h4>Shubhang <span><i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i></span></h4>
+            <h4>Shubhang <span><i class="fa-solid fa-star"></i> </i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i> <i class="fa-solid fa-star"></i></span></h4>
             <p><small>3 weeks ago</small></p>
             <p>House is clean and cozy. Arun handled everything smoothly and was responsive throughout the stay.</p>
         </div>
@@ -186,117 +272,204 @@
 </section>
 <section>
     <div class="map">
-  <h3>Where you'll be</h3>
-  <p>Hyderabad, Telangana, India</p>
-  <div class="map-responsive">
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6695.051581539235!2d78.38200770721619!3d17.506080378051177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb91f8706d4851%3A0x58e04e30d0634073!2sMAHALAKSHMI%20ESTATES%2C%20Hyder%20Nagar%2C%20Brindavan%20Colony%2C%20Nizampet%2C%20Hyderabad%2C%20Telangana%20500090!5e0!3m2!1sen!2sin!4v1747719965988!5m2!1sen!2sin"
-      allowfullscreen=""
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-    ></iframe>
-  </div>
-</div>
-
+        <h3>Where you'll be</h3>
+        <p>Hyderabad, Telangana, India</p>
+        <div class="map-responsive">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6695.051581539235!2d78.38200770721619!3d17.506080378051177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb91f8706d4851%3A0x58e04e30d0634073!2sMAHALAKSHMI%20ESTATES%2C%20Hyder%20Nagar%2C%20Brindavan%20Colony%2C%20Nizampet%2C%20Hyderabad%2C%20Telangana%20500090!5e0!3m2!1sen!2sin!4v1747719965988!5m2!1sen!2sin"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+        </div>
+    </div>
 </section>
 <div class="thing"><h3>Things to know</h3></div>
-  <section class="footerlinks">
+<section class="footerlinks">
     <div class="footersec">
-      <h4>House rules</h4>
-      <p>Check-in after ${hotel.checkin}</p>
-      <p>Checkout before ${hotel.checkout}</p>
-<p>Guests maximum — ${hotel.numberrooms * 5}</p>
-      <button>Show more ></button>
+        <h4>House rules</h4>
+            <li>Check-in after ${hotel.checkin}</li>
+            <li>Checkout before ${hotel.checkout}</li>
+            <li>Guests maximum — ${hotel.numberrooms * 5}</li>
+            <button>Show more ></button>
     </div>
 
     <div class="footersec">
-      <h4>Safety & property</h4>
-      <p>Carbon monoxide alarm not Reported</p>
-      <p>Smoke alarm not reported</p>
-      <p>Exterior security cameras on property</p>
-      <button>Show more></button>
-     
+        <h4>Safety & property</h4>
+        <li>Smoke alarm not reported</li>
+        <li>Carbon monoxide alarm not Reported</li>
+        <li>Exterior security cameras on property</li>
+        <button>Show more></button>
     </div>
 
     <div class="footersec">
-      <h4>Cancellation policy</h4>
-      <p>Free Cancellation before 5 days before reserved</p>
-      <p>Check-in on time</p>
-      <p>Review this Host’s full policy for details.</p>
-      <button>Show more></button>
-
+        <h4>Cancellation policy</h4>
+        <li>Free Cancellation before 5 days before reserved</li>
+        <li>Check-in on time</li>
+        <li>Review this Host's full policy for details.</li>
+        <button>Show more></button>
     </div>
-  </section>
+</section>
 
-    <section class="footerlinks">
+<section class="footerlinks">
     <div class="footersec">
-      <h4>Support</h4>
-      <button>Help Centre</button>
-      <button>RestioCover</button>
-      <button>Anti-discrimination</button>
-      <button>Disability support</button>
-      <button>Cancellation options</button>
-      <button>Report neighbourhood concern</button>
-    </div>
-
-    <div class="footersec">
-      <h4>Hosting</h4>
-      <button>Restio your home</button>
-      <button>RestioCover for Hosts</button>
-      <button>Hosting resources</button>
-      <button>Community forum</button>
-      <button>Hosting responsibly</button>
-      <button>Join a free Hosting class</button>
-      <button>Find a co-host</button>
+        <h4>Support</h4>
+        <button>Help Centre</button>
+        <button>RestioCover</button>
+        <button>Anti-discrimination</button>
+        <button>Disability support</button>
+        <button>Cancellation options</button>
+        <button>Report neighbourhood concern</button>
     </div>
 
     <div class="footersec">
-      <h4>Restio</h4>
-      <button>2025 Summer Release</button>
-      <button>Newsroom</button>
-      <button>New features</button>
-      <button>Careers</button>
-      <button>Investors</button>
-      <button>Restio.org emergency stays</button>
+        <h4>Hosting</h4>
+        <button>Restio your home</button>
+        <button>RestioCover for Hosts</button>
+        <button>Hosting resources</button>
+        <button>Community forum</button>
+        <button>Hosting responsibly</button>
+        <button>Join a free Hosting class</button>
+        <button>Find a co-host</button>
     </div>
-  </section>
 
+    <div class="footersec">
+        <h4>Restio</h4>
+        <button>2025 Summer Release</button>
+        <button>Newsroom</button>
+        <button>New features</button>
+        <button>Careers</button>
+        <button>Investors</button>
+        <button>Restio.org emergency stays</button>
+    </div>
+</section>
 
-  <section>
+<section>
     <nav class="btmNav">
-      <!-- Logo -->
-      <div class="leftSideBtm">
-        <p>© 2025 Restio, Inc</p>
-        <ul class="footer">
-          <li>Privacy</li>
-          <li>Terms</li>
-          <li>Sitemaps</li>
-          <li>Company details</li>
-        </ul>
-      </div>
+        <!-- Logo -->
+        <div class="leftSideBtm">
+            <p>© 2025 Restio, Inc</p>
+            <ul class="footer">
+                <li>Privacy</li>
+                <li>Terms</li>
+                <li>Sitemaps</li>
+                <li>Company details</li>
+            </ul>
+        </div>
 
-      <!-- right menu -->
-      <div class="rightSideBottom gap-5">
-        <p>Restio</p>
-        <p class="d-flex gap-5">
-          <i class="fa-brands fa-facebook"></i>
-          <i class="fa-brands fa-x-twitter"></i>
-          <i class="fa-brands fa-instagram"></i>
-        </p>
-      </div>
+        <!-- right menu -->
+        <div class="rightSideBottom gap-5">
+            <p>Restio</p>
+            <p class="d-flex gap-5">
+                <i class="fa-brands fa-facebook"></i>
+                <i class="fa-brands fa-x-twitter"></i>
+                <i class="fa-brands fa-instagram"></i>
+            </p>
+        </div>
     </nav>
-  </section>`;}
-  else {
+</section>`;
+          } else {
             container.innerHTML = "<p class='text-danger'>Hotel not found.</p>";
           }
+
+          // Add click handlers for the image gallery after the HTML is rendered
+          setupImageGallery();
         })
         .catch((error) => {
           document.getElementById("details-container").innerHTML =
             "<p class='text-danger'>Error loading hotel data.</p>";
           console.error("Error fetching hotels.json:", error);
         });
+
+      function generateImageGallery(hotel) {
+        // Create an array of available photos from the hotel object (photo2 to photo5)
+        const thumbnails = [];
+        for (let i = 2; i <= 5; i++) {
+          const photoKey = `photo${i}`;
+          if (hotel[photoKey]) {
+            thumbnails.push({
+              src: hotel[photoKey],
+              alt: `${hotel.hotel_name} photo ${i}`,
+            });
+          }
+        }
+
+        // Main image is always photo1
+        const mainImage = hotel.photo1
+          ? {
+              src: hotel.photo1,
+              alt: `${hotel.hotel_name} main photo`,
+            }
+          : null;
+
+        if (!mainImage && thumbnails.length === 0) {
+          // Default images if none are provided
+          return `
+                    <div class="mainimage"><img src="./1.webp" alt="main image" id="mainImage" /></div>
+                    <div class="smallimages">
+                        <img src="./1.webp" alt="Building" class="thumbnail" />
+                        <img src="./1.webp" alt="Building" class="thumbnail" />
+                        <img src="./1.webp" alt="Building" class="thumbnail" />
+                        <img src="./1.webp" alt="Building" class="thumbnail" />
+                    </div>`;
+        }
+
+        // Generate HTML for the main image and thumbnails
+        return `
+                <div class="mainimage"><img src="${
+                  mainImage ? mainImage.src : thumbnails[0]?.src || "./1.webp"
+                }" 
+                    alt="${
+                      mainImage
+                        ? mainImage.alt
+                        : thumbnails[0]?.alt || "Main image"
+                    }" 
+                    id="mainImage" /></div>
+                <div class="smallimages">
+                    ${thumbnails
+                      .map(
+                        (thumbnail, index) => `
+                        <img src="${thumbnail.src}" 
+                             alt="${thumbnail.alt}" 
+                             class="thumbnail" 
+                             data-index="${index}" />`
+                      )
+                      .join("")}
+                    ${
+                      thumbnails.length < 4
+                        ? Array(4 - thumbnails.length)
+                            .fill()
+                            .map(
+                              () =>
+                                `<img src="./1.webp" alt="Placeholder" class="thumbnail" />`
+                            )
+                            .join("")
+                        : ""
+                    }
+                </div>`;
+      }
+
+      function setupImageGallery() {
+        const thumbnails = document.querySelectorAll(".thumbnail");
+        const mainImage = document.getElementById("mainImage");
+
+        if (thumbnails && mainImage) {
+          thumbnails.forEach((thumbnail) => {
+            thumbnail.addEventListener("click", function () {
+              // Update main image
+              mainImage.src = this.src;
+              mainImage.alt = this.alt;
+
+              // Update active thumbnail
+              document
+                .querySelectorAll(".thumbnail")
+                .forEach((t) => t.classList.remove("active"));
+              this.classList.add("active");
+            });
+          });
+        }
+      }
     </script>
-
-</body>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
