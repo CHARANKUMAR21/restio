@@ -429,6 +429,19 @@ body.dark-mode button#showmore1:hover {
   background-color: var(--primary-hover);
 }
 
+
+
+
+#minPrice,
+#maxPrice {
+  flex: 1;
+}
+#applyFilters{
+  background-color: var(--primary-color);
+}
+#applyFilters:hover{
+  background-color: var(--primary-hover);
+}
 /* Hotel Cards */
 #hotel-container {
   gap: 2rem;
