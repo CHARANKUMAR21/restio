@@ -135,6 +135,41 @@
         <i class="fas fa-search"></i>
       </button>
     </div>
+
+    <!-- Filter Section -->
+<!-- Add this after your searchbar div -->
+<!-- Add this after your searchbar div -->
+<div class="filter-section container  mt-3 mb-4 p-3 bg-light rounded">
+  <div class="row g-3">
+    <div class="col-md-4">
+      <label class="form-label">Price Range ($/night)</label>
+      <div class="d-flex align-items-center gap-2">
+        <input type="number" id="minPrice" class="form-control" placeholder="Min" min="0">
+        <span>to</span>
+        <input type="number" id="maxPrice" class="form-control" placeholder="Max" min="0">
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <label class="form-label">Minimum Rating</label>
+      <select id="minRating" class="form-select">
+        <option value="0">Any Rating</option>
+        <option value="1">1★+</option>
+        <option value="2">2★+</option>
+        <option value="3">3★+</option>
+        <option value="4">4★+</option>
+        <option value="5">5★</option>
+      </select>
+    </div>
+    
+    <div class="col-md-4 d-flex align-items-end">
+      <button id="applyFilters" class="btn btn-danger me-2 flex-grow-1">Filter</button>
+      <button id="resetFilters" class="btn btn-outline-secondary flex-grow-1">Reset</button>
+    </div>
+  </div>
+</div>
+
+
   </div>
   <!-- -------------------------------------------- -->
   <!-- <div id="hotel-container" class="container my-4 d-flex" ></div> -->
@@ -328,6 +363,78 @@
 
 <!-- ---------------------------------------------------------------------- -->
 
+
+
+
+
+
+<script>
+
+// Add these variables at the top of your script (with your other variable declarations)
+const minPriceInput = document.getElementById('minPrice');
+const maxPriceInput = document.getElementById('maxPrice');
+const minRatingSelect = document.getElementById('minRating');
+const applyFiltersBtn = document.getElementById('applyFilters');
+const resetFiltersBtn = document.getElementById('resetFilters');
+
+// Add this function to apply filters
+function applyFilters() {
+  const minPrice = minPriceInput.value ? parseInt(minPriceInput.value) : null;
+  const maxPrice = maxPriceInput.value ? parseInt(maxPriceInput.value) : null;
+  const minRating = parseInt(minRatingSelect.value);
+
+  filteredHotels = allHotels.filter(hotel => {
+    // Price filter
+    if (minPrice !== null && hotel.rates_from < minPrice) return false;
+    if (maxPrice !== null && hotel.rates_from > maxPrice) return false;
+    
+    // Rating filter
+    if (minRating > 0 && hotel.star_rating < minRating) return false;
+    
+    return true;
+  });
+
+  currentPage = 1;
+  displayHotels(currentPage);
+}
+
+// Add this function to reset filters
+function resetFilters() {
+  minPriceInput.value = '';
+  maxPriceInput.value = '';
+  minRatingSelect.value = '0';
+  applyFilters();
+}
+
+// Add these event listeners at the end of your DOMContentLoaded function
+applyFiltersBtn.addEventListener('click', applyFilters);
+resetFiltersBtn.addEventListener('click', resetFilters);
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- --------------------------------------------------------- -->
   <script>
     const toggleBtn = document.getElementById("navbarToggle");
     const navbarMenu = document.getElementById("navbarMenu");
@@ -378,33 +485,75 @@
     });
 
   // Search functionality
-  function setupSearch() {
+function setupSearch() {
     function performSearch() {
-      const searchTerm = searchInput.value.toLowerCase().trim();
-      
-      if (searchTerm === '') {
-        filteredHotels = [...allHotels];
-      } else {
-        filteredHotels = allHotels.filter(hotel => {
-          return (
-            (hotel.hotel_name && hotel.hotel_name.toLowerCase().includes(searchTerm)) ||
-            (hotel.city && hotel.city.toLowerCase().includes(searchTerm)) ||
-            (hotel.country && hotel.country.toLowerCase().includes(searchTerm)) ||
-            (hotel.overview && hotel.overview.toLowerCase().includes(searchTerm))
-          );
-        });
-      }
-      
-      currentPage = 1;
-      displayHotels(currentPage);
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        
+        // Get filter values
+        const minPrice = minPriceInput.value ? parseInt(minPriceInput.value) : null;
+        const maxPrice = maxPriceInput.value ? parseInt(maxPriceInput.value) : null;
+        const minRating = minRatingSelect.value ? parseInt(minRatingSelect.value) : 0;
+        
+        if (searchTerm === '' && minPrice === null && maxPrice === null && minRating === 0) {
+            // No filters or search term - show all hotels
+            filteredHotels = [...allHotels];
+        } else {
+            filteredHotels = allHotels.filter(hotel => {
+                // Search term matching (keep your existing logic)
+                const matchesSearch = searchTerm === '' || 
+                    (hotel.hotel_name && hotel.hotel_name.toLowerCase().includes(searchTerm)) ||
+                    (hotel.city && hotel.city.toLowerCase().includes(searchTerm)) ||
+                    (hotel.country && hotel.country.toLowerCase().includes(searchTerm)) ||
+                    (hotel.overview && hotel.overview.toLowerCase().includes(searchTerm));
+                
+                // Price filter
+                const matchesPrice = (minPrice === null || hotel.rates_from >= minPrice) && 
+                                   (maxPrice === null || hotel.rates_from <= maxPrice);
+                
+                // Rating filter
+                const matchesRating = minRating === 0 || hotel.star_rating >= minRating;
+                
+                // Must match all active filters
+                return matchesSearch && matchesPrice && matchesRating;
+            });
+        }
+        
+        currentPage = 1;
+        displayHotels(currentPage);
     }
 
     searchButton.addEventListener('click', performSearch);
     searchInput.addEventListener('keyup', (e) => {
-      if (e.key === 'Enter') performSearch();
+        if (e.key === 'Enter') performSearch();
     });
-  }
+    
+    // Add event listeners for filter controls
+    applyFiltersBtn.addEventListener('click', performSearch);
+    resetFiltersBtn.addEventListener('click', function() {
+        minPriceInput.value = '';
+        maxPriceInput.value = '';
+        minRatingSelect.value = '0';
+        performSearch();
+    });
+}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   // Hotel card creation
   function createHotelCard(hotel) {
     const carouselId = `carouselHotel${hotel.hotel_id}`;
