@@ -429,19 +429,25 @@ body.dark-mode button#showmore1:hover {
   background-color: var(--primary-hover);
 }
 
+/* ------------------------------------------------------------ */
+.filter-section {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
 
-
-
+/* Make price inputs equal width */
 #minPrice,
 #maxPrice {
   flex: 1;
 }
-#applyFilters{
+#applyFilters {
   background-color: var(--primary-color);
 }
-#applyFilters:hover{
+#applyFilters:hover {
   background-color: var(--primary-hover);
 }
+
+/* ----------------------------------------------------------------- */
+
 /* Hotel Cards */
 #hotel-container {
   gap: 2rem;
@@ -451,7 +457,6 @@ body.dark-mode button#showmore1:hover {
 .card1 {
   width: 300px;
   margin-bottom: 2rem;
-
   transition: var(--transition);
   overflow: hidden;
   border: none !important;
@@ -477,7 +482,7 @@ body.dark-mode button#showmore1:hover {
 .carousel-item img {
   height: 100%;
   width: 100%;
-  object-fit: cover;
+  object-fit: fill;
 }
 
 .carousel-control-prev-icon,
@@ -626,7 +631,44 @@ body.dark-mode button#showmore1:hover {
     margin: 0.2rem 0;
   }
 }
+.favorite-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background:transparent;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.favorite-btn i {
+  color: #ccc;
+  font-size: 18px;
+}
+.favorite-btn.favorited i {
+  color: #ff385c;
+}
+.favorite-btn:hover i {
+  color: #ff385c;
+  transform: scale(1.1);
+}
+.far.fa-heart {
+  color: var(--primary-hover);
+}
 
+.fas.fa-heart {
+  color: red;
+}
+
+.fas.fa-heart.favorited {
+  color: #ff385c;
+  transform: scale(1.1); 
+}
 /* Tablet View (e.g., 768px - 1024px) */
 @media screen and (min-width: 700px) and (max-width: 960px) {
   #hotel-container {
